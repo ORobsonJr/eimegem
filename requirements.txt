@@ -1,5 +1,5 @@
 django
 djangorestframework
-PIL
+pillow
 pytesseract
-
+django-cors-headers

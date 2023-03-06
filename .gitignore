@@ -1,2 +1,3 @@
 **/__pycache__
-**/converter/RAM_files/
+converter/RAM_files/**
+.venv
