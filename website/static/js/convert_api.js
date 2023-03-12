@@ -17,7 +17,6 @@ function showResult() {
         const file = fileInput.files[0];
         const reader = new FileReader();
 
-        console.log(file);
         //Clear the ouput before we add another value.
         document.getElementById('output-text').value = "";
 
@@ -26,37 +25,40 @@ function showResult() {
             /*
             Send base64 data to api
             */
+    
 
             //We make a filter in html and js to filter extensions types
             const supportMediaTypes = ["image/png", "image/jpeg", "image/jpg"];
             
-            if (supportMediaTypes.indexOf(file['type']) ==-1){
-                console.log(file['type']);
+            if (supportMediaTypes.indexOf(file['type']) !=-1){
+                
+                const endpoint = "http://localhost:8000/v1/convertImage"
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", endpoint);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify({"data": reader.result}));
+
+                xhr.onreadystatechange = function () {
+                    dataJSON = JSON.parse(xhr.response)
+                    if (dataJSON.hasOwnProperty('data')) {
+                        console.log(dataJSON["data"])
+                        document.getElementById('output-text').value = dataJSON["data"];
+                    }
+    
+                    else {
+                        console.log('Exception raised:',dataJSON)
+                        alert("Um erro inesperado aconteceu, por favor confira o console para um melhor entendimento sobre o mesmo.");
+                    }
+                } 
+                
+            }
+
+            else {
                 alert('Formato de arquivo não permitido');
                 return 
             }
             
-            const endpoint = "http://localhost:8000/v1/convertImage"
-
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", endpoint);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.send(JSON.stringify({"data": reader.result}));
-            
-            xhr.onreadystatechange = function () {
-                dataJSON = JSON.parse(xhr.response)
-                if (dataJSON.hasOwnProperty('data')) {
-                    document.getElementById('output-text').value = dataJSON["data"];
-                }
-
-                else if (dataJSON["erro"]) {
-                    alert(dataJSON['erro']);
-                }
-
-                else {
-                    alert("Erro while try to use 'data' key value :" + dataJSON);
-                }
-                } 
         });
         reader.readAsDataURL(file);
     });
