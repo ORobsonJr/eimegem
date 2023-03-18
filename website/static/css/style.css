@@ -1,0 +1,78 @@
+#title {
+    margin-top: 90px;
+    color:rgb(255, 255, 255);  
+    font-size: 40px;
+  
+}
+
+.block1 {
+    align-items: center;
+    text-align: center;
+    color: white;
+}
+
+body::before {
+    background-image: url("https://c4.wallpaperflare.com/wallpaper/108/140/869/digital-digital-art-artwork-fantasy-art-drawing-hd-wallpaper-preview.jpg");
+    opacity: 0.3;
+}
+
+body {
+    background-color: rgb(98, 0, 255);
+    font-family: "Avenir";
+}
+
+
+input {
+    opacity: 0;
+    width: 100%;
+    height: 10vh;
+}
+
+label{
+    text-align: center;
+    padding: 20px 10px;
+    width: 200px;
+    background-color: rgb(157, 96, 255);
+    color: #FFF;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: -10vh;
+    position: relative;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+}
+
+.input-field {
+    color: rgb(98, 0, 255);
+    text-align: center;
+    background:rgb(255, 255, 255);
+    width: 100%;
+}
+
+#output-text {
+    width: 90%;
+    height: 50vh;
+    margin-bottom: 10%;
+}
+
+#loading {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid rgb(98, 0, 255); /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 35vh;
+    vertical-align: middle;
+    text-align: center;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

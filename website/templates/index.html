@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   <title>Eimegem</title>
+</head>
+<body id="body">
+
+<div id="loading" style="display: block">
+</div>
+
+   <!-- COLOQUE A DIV "loading" ACIMA DE TODO O CONTEUDO DO SITE (ABAIXO DA <body>) -->
+
+   <div id="conteudo" style="display: none">
+   <div class="block1">
+      <h1 id="title">Eimegem</h1>
+      <p style="font-size:15px;">Eimegem é um projeto que faz a conversão de imagens em texto,<br>para fazer o uso, clique no botão abaixo e selecione o arquivo em formato imagem jpg, jpeg ou png.</p>
+      <label for="inputTag">Selecionar arquivo</label>
+
+      <input type="file" id="button-file" onclick="showResult();" accept="image/png, image/jpeg, image/jpg">
+         
+   </div>
+
+
+   <div class="input-field">
+      <h1 id="sub-title"><br>Resultado</h1>
+      <p>O seu resultado será retornado no campo abaixo de forma edítavel, ou seja, em casos de erros de tradução do programa, você pode corrigir esses erros.</p>
+      <textarea id="output-text" name="text"></textarea>
+   <!--    <img src="{% static 'img/github.png' %}" width="80px" height="auto">
+   -->
+   </div>
+</div>
+
+<script src="{% static 'js/convert_api.js' %}"></script>
+<style>
+   @import url('https://fonts.cdnfonts.com/css/avenir');
+</style>
+
+<script>
+   var i = setInterval(function () {
+   document.getElementById('output-text').value = "";
+
+   clearInterval(i);
+ 
+   document.getElementById("loading").style.display = "none";
+   document.getElementById("conteudo").style.display = "inline";
+}, 1500);</script>
+
+
+</body>
+</html>
