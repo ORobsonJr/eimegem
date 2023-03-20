@@ -1,0 +1,5 @@
+django
+djangorestframework
+pillow
+pytesseract
+django-cors-headers

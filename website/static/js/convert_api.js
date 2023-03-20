@@ -1,13 +1,23 @@
 
 function showResult() {
     /* 
+<<<<<<< HEAD
     This function receive a text image and return a text string
+=======
+    This function receive an image and return a text
+>>>>>>> converter
 
     The process work in the following way:
     1. Receive the image uploaded
     2. Convert to Base64 and send to backend
     3. Backend process the image and return a reponse
+<<<<<<< HEAD
     4. We passed the response from server to client
+=======
+    4. We pass the response from server to client
+
+
+>>>>>>> converter
     */
     const fileInput = document.getElementById('button-file');
 
@@ -15,7 +25,10 @@ function showResult() {
         const file = fileInput.files[0];
         const reader = new FileReader();
 
+<<<<<<< HEAD
         console.log(file);
+=======
+>>>>>>> converter
         //Clear the ouput before we add another value.
         document.getElementById('output-text').value = "";
 
@@ -24,16 +37,49 @@ function showResult() {
             /*
             Send base64 data to api
             */
+<<<<<<< HEAD
+=======
+    
+>>>>>>> converter
 
             //We make a filter in html and js to filter extensions types
             const supportMediaTypes = ["image/png", "image/jpeg", "image/jpg"];
             
+<<<<<<< HEAD
             if (supportMediaTypes.indexOf(file['type']) ==-1){
                 console.log(file['type']);
+=======
+            if (supportMediaTypes.indexOf(file['type']) !=-1){
+                
+                const endpoint = "http://localhost:8000/v1/convertImage"
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", endpoint);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify({"data": reader.result}));
+
+                xhr.onreadystatechange = function () {
+                    dataJSON = JSON.parse(xhr.response)
+                    if (dataJSON.hasOwnProperty('data')) {
+                        console.log(dataJSON["data"])
+                        document.getElementById('output-text').value = dataJSON["data"];
+                    }
+    
+                    else {
+                        console.log('Exception raised:',dataJSON)
+                        alert("Um erro inesperado aconteceu, por favor confira o console para um melhor entendimento sobre o mesmo.");
+                    }
+                } 
+                
+            }
+
+            else {
+>>>>>>> converter
                 alert('Formato de arquivo não permitido');
                 return 
             }
             
+<<<<<<< HEAD
             const endpoint = "http://localhost:8000/v1/convertImage"
 
             var xhr = new XMLHttpRequest();
@@ -55,6 +101,8 @@ function showResult() {
                     alert("Erro while try to use 'data' key value :" + dataJSON);
                 }
                 } 
+=======
+>>>>>>> converter
         });
         reader.readAsDataURL(file);
     });

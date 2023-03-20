@@ -18,13 +18,25 @@ def img_to_str(file_location: str):
         return content
 
     except Exception as e:
+<<<<<<< HEAD
+=======
+        try:
+            os.remove(file_location)
+        except:
+            pass
+        
+>>>>>>> converter
         return {"erro": f"""{e}"""}
 
 def create_file(data):
     """
     Receive the base64 image data and convert to image
     """
+<<<<<<< HEAD
     RAM_FILES = 'converter/RAM_files'
+=======
+    RAM_FILES = os.path.join('converter', 'RAM_files')
+>>>>>>> converter
 
     def generate_filename():
         while True:
