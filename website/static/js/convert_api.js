@@ -26,35 +26,54 @@ function showResult() {
             */
 
             //We make a filter in html and js to filter extensions types
-            const supportMediaTypes = ["image/png", "image/jpeg", "image/jpg"];
+            const supportMediaTypes = ["image/png", "image/jpeg", "image/jpg", "application/pdf"];
             
-            if (supportMediaTypes.indexOf(file['type']) ==-1){
-                console.log(file['type']);
-                alert('Formato de arquivo não permitido');
-                return 
+            const IndexFileType = supportMediaTypes.indexOf(file['type'])
+            if (supportMediaTypes.indexOf(file['type']) !=-1){
+                /*
+                Return file extension
+                */  
+
+                var item = supportMediaTypes[IndexFileType]; //The item from list
+                var findSlash = item.indexOf('/')
+                const fileType = item.slice(findSlash+1, item.length)
+                
+                
+
+                const endpoint = "http://localhost:8000/v1/convertImage"
+
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", endpoint);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.send(JSON.stringify({"data": reader.result, "dataType": fileType}));
+                xhr.onreadystatechange = function () {
+                    dataJSON = JSON.parse(xhr.response)
+                    if (dataJSON.hasOwnProperty('data')) {
+                        document.getElementById('output-text').value = dataJSON["data"];
+                    }
+
+                    else if (dataJSON["erro"]) {
+                        alert("Aconteceu um erro", dataJSON['erro']);
+                        console.log(dataJSON);
+
+                    }
+
+                    else {
+                        alert("Erro while try to use 'data' key value :" + dataJSON);
+                    }
+                    } 
             }
             
-            const endpoint = "http://localhost:8000/v1/convertImage"
 
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", endpoint);
-            xhr.setRequestHeader("Content-Type", "application/json");
-            xhr.send(JSON.stringify({"data": reader.result}));
+            else{
+                console.log(file['type']);
+                alert('Formato de arquivo não permitido');
+            }
             
-            xhr.onreadystatechange = function () {
-                dataJSON = JSON.parse(xhr.response)
-                if (dataJSON.hasOwnProperty('data')) {
-                    document.getElementById('output-text').value = dataJSON["data"];
-                }
 
-                else if (dataJSON["erro"]) {
-                    alert(dataJSON['erro']);
-                }
-
-                else {
-                    alert("Erro while try to use 'data' key value :" + dataJSON);
-                }
-                } 
+            
+            fileInput.reset();
+            
         });
         reader.readAsDataURL(file);
     });
