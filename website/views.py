@@ -15,10 +15,11 @@ def convert_image(request):
     """Convert image to text"""
 
     image_data = request.data
-    #Content of image in base64
+    #Content of file in base64
+    converter_object = converter.ConvertObject() 
 
-    file_location = converter.create_file(image_data)
-    data_processed = converter.img_to_str(file_location)
+    file_location = converter_object.create_file(image_data)
+    data_processed = converter_object.img_to_str(file_location)
     if type(data_processed) is dict:
         if data_processed.get('erro') is None:
             return Response(
