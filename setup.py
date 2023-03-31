@@ -2,7 +2,6 @@ import platform
 import os, fnmatch
 import sys
 from var import manage
-import requests
 import subprocess
 
 
@@ -40,6 +39,8 @@ class return_pyseract():
         
     
     def install_through_ocr(self):
+        import requests
+
         BITS = 0
         if (sys.maxsize > 2**64) is True:
             BITS = 64
@@ -51,7 +52,7 @@ class return_pyseract():
         download_url = manage.return_bits_ocr(BITS)
         r = requests.get(download_url)
 
-        file_exe = os.path.join('ocr-install.exe') 
+        file_exe = os.path.join('setup', 'ocr-install.exe') 
         with open(file_exe, 'wb') as f:
             f.write(r.content)
 
@@ -117,7 +118,9 @@ if __name__ == '__main__' and sys.argv[1]=='INSTALL':
     install_requirements()
 
     if OPERATIONAL_SYSTEM == 'Windows':
-        os.mkdir('setup')
+        try: os.mkdir('setup')
+        except: pass
+
         result = return_pyseract().browse_disk()
 
         if result:
