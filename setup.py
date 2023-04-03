@@ -1,5 +1,5 @@
 import platform
-import os, fnmatch
+import os
 import sys
 from var import manage
 import subprocess
@@ -8,7 +8,8 @@ import subprocess
 REQUIREMENTS = 'requirements.txt'
 EXECUTABLE_FILE = 'start'
 OPERATIONAL_SYSTEM = platform.system()
-PYSERACT_CMD_LOCATION = ''
+FILE_EXE = os.path.join('setup', 'ocr-install.exe') 
+
 
 
 
@@ -21,23 +22,7 @@ class return_pyseract():
     This is just aplicable in Windows system
     """
     
-    def browse_disk(self):
-        """
-        Browse disk even find a good candidate to our request
-        """
 
-        pattern = 'tesseract.exe'
-        path = 'C:'
-
-        result = []
-        for root, dirs, files in os.walk(path):
-            for name in files:
-                if fnmatch.fnmatch(name, pattern):
-                    result.append(os.path.join(root, name))
-        if result:
-            return result[0]
-        
-    
     def install_through_ocr(self):
         import requests
 
@@ -52,19 +37,39 @@ class return_pyseract():
         download_url = manage.return_bits_ocr(BITS)
         r = requests.get(download_url)
 
-        file_exe = os.path.join('setup', 'ocr-install.exe') 
-        with open(file_exe, 'wb') as f:
+        with open(FILE_EXE, 'wb') as f:
             f.write(r.content)
 
         print('[setup] Abrindo arquivo executavel para instalação')
         print('[setup] Por favor, conclua a instalação e faça a configuração na pasta setup')
 
-        subprocess.run([file_exe])
+        try: 
+            subprocess.run([FILE_EXE])
+
+        except Exception as e:
+            print(e)
+
+        while True:
+            #While not receive a valid responde, still True
+            response = input('Por favor preencha o diretório do arquivo tesseract.exe: ')
+
+            if os.path.exists(response) is True:
+                name_file = os.path.join(os.path.dirname(__file__),
+                                        'var',
+                                        'ocr_location.txt')
+                
+                with open(name_file, 'w') as f:
+                    f.write(response)
+
+
+
+
+        
 
 
 
 def set_converter():
-    stringfy_file = os.path.join('converter','stringify.py')
+    stringfy_file = os.path.join('converter', 'stringify.py')
 
     #We need to pull this back to avoid incorrect indentation in the final code
     linux_code = \
@@ -82,7 +87,7 @@ def stringfy_image(file):
 
     # We need to pull this back to avoid incorrect indentation in the final code
     windows_code = \
-f"""
+"""
 import os
 import pytesseract
 from pytesseract import image_to_string
@@ -90,7 +95,14 @@ from PIL import Image
 
 
 def stringfy_image(file):
-    pytesseract.pytesseract.tesseract_cmd = r"{PYSERACT_CMD_LOCATION}"
+
+    seract_location = open(os.path.join(
+        os.path.dirname(__file__),
+        'var',
+        'ocr_location.txt'  
+        )
+
+    pytesseract.pytesseract.tesseract_cmd = r"{}".format(seract_location)
     content = image_to_string(Image.open(file))
     os.remove(file)
     return content
@@ -121,14 +133,10 @@ if __name__ == '__main__' and sys.argv[1]=='INSTALL':
         try: os.mkdir('setup')
         except: pass
 
-        result = return_pyseract().browse_disk()
+        return_pyseract().install_through_ocr()
+        set_converter()
 
-        if result:
-            PYSERACT_CMD_LOCATION = result
-            set_converter()
 
-        else:
-            return_pyseract().install_through_ocr()
 
     elif OPERATIONAL_SYSTEM == 'Linux':
         set_converter()
