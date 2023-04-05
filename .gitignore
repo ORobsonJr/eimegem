@@ -2,3 +2,4 @@
 converter/RAM_files/**
 .venv
 setup
+converter/stringify.py

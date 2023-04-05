@@ -3,3 +3,7 @@ djangorestframework
 pillow
 pytesseract
 django-cors-headers
+requests
+opencv-python
+matplotlib
+pdf2image
