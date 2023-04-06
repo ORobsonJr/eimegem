@@ -1,12 +1,11 @@
-from PIL import Image
-from pytesseract import image_to_string
 import os
 import base64
 import string
 from os.path import exists
 from random import choice
 from pdf2image import convert_from_path
- 
+from . import stringify
+
 
 class ConvertObject():
 
@@ -25,20 +24,22 @@ class ConvertObject():
                 metadatas = []
 
                 for f in files:
-                    content = image_to_string(Image.open(f))
-                    os.remove(f)
+                    content = stringify.stringfy_image(f)
                     metadatas.append(content)
                 return metadatas
 
 
             if type(files) is str:
                 #Probably a single file
-                content = image_to_string(Image.open(files))
-                os.remove(f)
+                content = stringify.stringfy_image(files)
                 return content
             
             else:
                 raise TypeError("The files keyword type is not suported")
+
+        except FileNotFoundError:
+            print('Please install setup before')
+
 
         except Exception as e:
             return {"erro": f"""{e}"""}
