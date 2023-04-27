@@ -1,5 +1,7 @@
 **/__pycache__
 converter/RAM_files/**
 .venv
-setup
 converter/stringify.py
+dist
+build
+eimegem.egg-info
