@@ -1,7 +1,8 @@
 **/__pycache__
 converter/RAM_files/**
 .venv
-converter/stringify.py
 dist
 build
 eimegem.egg-info
+setup
+converter/PDF_AI/**
