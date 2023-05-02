@@ -2,4 +2,4 @@
 converter/RAM_files/**
 .venv
 setup
-converter/stringify.py
+converter/PDF_AI/**
