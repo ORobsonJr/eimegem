@@ -1,9 +1,9 @@
-django
 djangorestframework
 pillow
 pytesseract
 django-cors-headers
-requests
+django
 opencv-python
 matplotlib
 pdf2image
+PyPDF2

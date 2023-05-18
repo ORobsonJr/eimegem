@@ -1,5 +1,8 @@
 **/__pycache__
 converter/RAM_files/**
 .venv
+dist
+build
+eimegem.egg-info
 setup
 converter/PDF_AI/**
