@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang=pt-BR">
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,11 +30,19 @@
    <div class="input-field">
       <h1 id="sub-title"><br>Resultado</h1>
       <p>O seu resultado será retornado no campo abaixo de forma edítavel, ou seja, em casos de erros de tradução do programa, você pode corrigir esses erros.</p>
+      <input type="button" id="correct-text" value="Corrigir texto" title="Ao clicar aqui o texto abaixo será corrigido">
       <textarea id="output-text" name="text"></textarea>
    <!--    <img src="{% static 'img/github.png' %}" width="80px" height="auto">
    -->
    </div>
+
+   <div class="made-by-robson">
+      💜 Made by Robson
+   </div>
 </div>
+
+
+
 
 <script src="{% static 'js/convert_api.js' %}"></script>
 <style>
