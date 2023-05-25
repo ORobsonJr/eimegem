@@ -2,15 +2,13 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.decorators import api_view
 from converter import converter
+from converter.text_handling import utils as utils_converter
 from rest_framework.response import Response
-from converter import learn_words
+
 
 # Create your views here.
 class PAGE(TemplateView):
     template_name = 'index.html'
-
-class Refresh(TemplateView):
-    template_name = 'learn_words.html'
 
 
 #REST api
@@ -35,15 +33,19 @@ def convert_image(request):
     return Response({'data': data_processed})
 
 @api_view(['POST'])
-def refresh_learn_ai(request):
+def text_correction(request):
     """
-    Run learn_words file
+    Receive a text and correct them
     """
 
     try:
-        learn_words.main()
-        return Response(status=200)
+        text = request.data
+        result = utils_converter.text_correction(text)
+        return Response({"data": result})
     
     except Exception as e:
-        return Response({'exception': str(e)}, status=500)
+        return Response({'erro': str(e)}, status=500)
+
+
+
 
