@@ -8,6 +8,23 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="{% static 'css/style.css' %}">
    <title>Eimegem</title>
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var button = document.getElementById('correct-text');
+        button.addEventListener('click', function() {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', 'http://localhost:8000/correct_text', true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              var response = xhr.responseText;
+              console.log(response); // Exibe a resposta da API no console do navegador
+              // Faça o que for necessário com a resposta da API aqui
+            }
+          };
+          xhr.send();
+        });
+      });
+    </script>
 </head>
 <body id="body">
 

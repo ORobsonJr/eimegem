@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 from rest_framework.decorators import api_view
 from converter import converter
+from converter.text_handling import utils as utils_converter
 from rest_framework.response import Response
 
 # Create your views here.
@@ -29,5 +30,21 @@ def convert_image(request):
         return Response({"erro": data_processed}, status=500)
     
     return Response({'data': data_processed})
+
+@api_view(['POST'])
+def text_correction(request):
+    """
+    Receive a text and correct them
+    """
+
+    try:
+        text = request.data
+        result = utils_converter.correct_by_gpt(text['data'])
+        return Response({"data": result})
+    
+    except Exception as e:
+        return Response({'erro': str(e)}, status=500)
+
+
 
 
