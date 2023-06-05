@@ -1,13 +1,30 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang=pt-BR">
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="{% static 'css/style.css' %}">
    <title>Eimegem</title>
+   <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var button = document.getElementById('correct-text');
+        button.addEventListener('click', function() {
+          var xhr = new XMLHttpRequest();
+          xhr.open('GET', 'http://localhost:8000/correct_text', true);
+          xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+              var response = xhr.responseText;
+              console.log(response); // Exibe a resposta da API no console do navegador
+              // Faça o que for necessário com a resposta da API aqui
+            }
+          };
+          xhr.send();
+        });
+      });
+    </script>
 </head>
 <body id="body">
 
@@ -30,11 +47,19 @@
    <div class="input-field">
       <h1 id="sub-title"><br>Resultado</h1>
       <p>O seu resultado será retornado no campo abaixo de forma edítavel, ou seja, em casos de erros de tradução do programa, você pode corrigir esses erros.</p>
+      <input type="button" id="correct-text" value="Corrigir texto" title="Ao clicar aqui o texto abaixo será corrigido">
       <textarea id="output-text" name="text"></textarea>
    <!--    <img src="{% static 'img/github.png' %}" width="80px" height="auto">
    -->
    </div>
+
+   <div class="made-by-robson">
+      💜 Made by Robson
+   </div>
 </div>
+
+
+
 
 <script src="{% static 'js/convert_api.js' %}"></script>
 <style>
