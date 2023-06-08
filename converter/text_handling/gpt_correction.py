@@ -2,7 +2,7 @@ import openai
 from decouple import config
 
 SCRIPT = """
-Corrija as palavras erradas, gramática e tudo que você encontrar de errado no texto que te passarei, vale ressaltar que não quero texto adicional, apenas o texto devidamente corrigido; texto para corrigir:
+Caso haja erros no texto abaixo corrija, caso contrário apenas ignore; texto:
 
 """
 
