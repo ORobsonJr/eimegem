@@ -53,16 +53,33 @@ label{
 }
 
 
-#correct-text {
-    background-color: rgb(157, 96, 255);
-    color: white;
+.button-correct {
+    background-color: rgb(16, 163, 127);
+    width: 10%;
+    display: flex;
+    align-items: center;
+    height: 8%;
+    margin-left: 4.7%;
     padding: 10px 20px;
-    border: none;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
-    margin-bottom: 5vh;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
 }
+
+.button-correct img {
+    margin-right: 10px;
+}
+
+.button-correct input[type="button"] {
+    vertical-align: middle;
+    background-color: rgb(16, 163, 127);
+    border: none;
+    color: white;
+  }
+
+
 
 
 #output-text {

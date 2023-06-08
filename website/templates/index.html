@@ -9,21 +9,36 @@
    <link rel="stylesheet" href="{% static 'css/style.css' %}">
    <title>Eimegem</title>
    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        var button = document.getElementById('correct-text');
-        button.addEventListener('click', function() {
-          var xhr = new XMLHttpRequest();
-          xhr.open('GET', 'http://localhost:8000/correct_text', true);
-          xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-              var response = xhr.responseText;
-              console.log(response); // Exibe a resposta da API no console do navegador
-              // Faça o que for necessário com a resposta da API aqui
+      var button_correct = document.getElementById('correct-text');
+
+      document.addEventListener('click', function() {
+         var output = document.getElementById('output-text')
+
+         if (output.value) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8000/v1/correct_text', true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({'data': output.value}));
+
+            xhr.onreadystatechange = function() {
+            if (xhr.status == 200) {
+               var response = JSON.parse(xhr.response);
+               document.getElementById('output-text').value = response["data"];
+
             }
-          };
-          xhr.send();
-        });
+
+            else {
+               console.log(xhr.responseText);
+            }
+         }}
+
+         else {
+            // ignore
+         }
+
+        
       });
+
     </script>
 </head>
 <body id="body">
@@ -47,7 +62,10 @@
    <div class="input-field">
       <h1 id="sub-title"><br>Resultado</h1>
       <p>O seu resultado será retornado no campo abaixo de forma edítavel, ou seja, em casos de erros de tradução do programa, você pode corrigir esses erros.</p>
-      <input type="button" id="correct-text" value="Corrigir texto" title="Ao clicar aqui o texto abaixo será corrigido">
+      <div class="button-correct">
+         <img src="{% static 'img/gpt.png' %}" width="30px">
+         <input type="button" id="correct-text" value="Corrigir texto" title="Ao clicar aqui o texto abaixo será corrigido pelo Chat-GPT">
+      </div>
       <textarea id="output-text" name="text"></textarea>
    <!--    <img src="{% static 'img/github.png' %}" width="80px" height="auto">
    -->
