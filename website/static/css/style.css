@@ -22,7 +22,7 @@ body {
 }
 
 
-input {
+#button-file {
     opacity: 0;
     width: 100%;
     height: 10vh;
@@ -52,6 +52,36 @@ label{
     width: 100%;
 }
 
+
+.button-correct {
+    background-color: rgb(16, 163, 127);
+    width: 10%;
+    display: flex;
+    align-items: center;
+    height: 8%;
+    margin-left: 4.7%;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+}
+
+.button-correct img {
+    margin-right: 10px;
+}
+
+.button-correct input[type="button"] {
+    vertical-align: middle;
+    background-color: rgb(16, 163, 127);
+    border: none;
+    color: white;
+  }
+
+
+
+
 #output-text {
     width: 90%;
     height: 50vh;
@@ -76,3 +106,14 @@ label{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+.made-by-robson {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    color: white;
+    left: 0;
+    width: 100%;
+    height: 4%;
+    background-color: rgb(27, 2, 66);    
+}

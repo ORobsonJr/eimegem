@@ -1,64 +1,123 @@
-#from ..models import Word
-import numpy as np
-from eimegem.converter import models
+from os import path
+from converter.models import Word
+import subprocess
+import math
+import multiprocessing
 
 
 
-class Similarity(): 
-    """
-    This script uses the Levenshtein distance algorithm to compute 
-    the minimum number of edits (insertions, deletions, or substitutions)
-    required to transform one string into another. The similarity score 
-    is then calculated as 1 minus the normalized distance divided by the maximum
-    length of the input strings.
-    """
+class Similarity():
+    @staticmethod
+    def calculate_similarity(target_word, word_list):
+        """
+        This call a C file to sped up our work.
 
-    def levenshtein_distance(self, w1, w2):
-        m, n = len(w1), len(w2)
-        dp = np.zeros((m + 1, n + 1))
+        In general we need a word_list which is all words learned stored in database
+        and a target word whose we'll compare.
 
-        for i in range(m + 1):
-            dp[i][0] = i
+        The structure tend to run in that wall:
+        target_word = 'banana'
+        word_list = ['banana', 'apple', 'one']
 
-        for j in range(n + 1):
-            dp[0][j] = j
+        similarity = [0.8, 0.1, 0,2]
 
-        for i in range(1, m + 1):
-            for j in range(1, n + 1):
-                if w1[i - 1] == w2[j - 1]:
-                    dp[i][j] = dp[i - 1][j - 1]
-                else:
-                    dp[i][j] = 1 + min(dp[i - 1][j - 1], dp[i][j - 1], dp[i - 1][j])
+        return the higher value from similarity getting it in wordlist
+        example:
+            banana, because the banana has the value 0.8 which is the higher value from our list
+        
+        """
+        batch_size = 100
 
-        return dp[m][n]
+        num_batches = math.ceil(len(word_list) / batch_size)
+        similarity_scores = []
 
-    def meansure_similarity(self, w1, w2):
-        distance = Similarity().levenshtein_distance(w1, w2)
-        similarity = 1 - (distance / max(len(w1), len(w2)))
-        return similarity
+        for i in range(num_batches):
+            start_idx = i * batch_size
+            end_idx = min((i + 1) * batch_size, len(word_list))
+            batch = word_list[start_idx:end_idx]
 
+            # Convert the target word and batch to bytes
+            target_word_bytes = target_word.encode()
+            word_list_bytes = [word.encode() for word in batch]
+
+            # Execute the C program and pass the target word and batch as arguments
+            C_PROGRAM_PATH = path.join(
+                path.dirname(__file__),
+                'workflows',
+                'similarity_calculator'
+            )
+            args = [C_PROGRAM_PATH, target_word_bytes] + word_list_bytes
+
+            try:
+                # Run the C program
+                result = subprocess.run(args, capture_output=True, text=True, check=True)
+                
+                # Get the output from the C program
+                output = result.stdout.strip()
+                batch_similarity_scores = list(map(float, output.split()))
+                similarity_scores.extend(batch_similarity_scores)
+
+            except subprocess.CalledProcessError as e:
+                print(f"An error occurred while running the C program: {e.stderr}")
+                return []
+
+        return similarity_scores
 
 
 class Database:
-    all_elements_object = models.Word.objects.all()
+    """
+    All our words from database
+    """
+    #Make 1000 rows process per each batch
+    all_elements_object = list(Word.objects.values_list('word', flat=True))
+
+    
 
 
 
 class text_handling():
-    def __init__(self, text: str):
-        self.original_text = text
+    def __init__(self):
+        self.original_text = ''
         self.processed_text = []
-        self.all_words = Database.all_elements_object
 
-    def split_text(self):
+    def get_nearest(self, word: str):
+        """
+        Get the word that best matches all database comparisons
+        """
+        list_similarity = Similarity.calculate_similarity(target_word=word, word_list=Database.all_elements_object)
+        higher_value_index = list_similarity.index(max(list_similarity))
+
+        return Database.all_elements_object[higher_value_index]
+
+    def __main__(self, text: str):
+        """
+        The main function
+        """
+
+        self.original_text = text
         self.processed_text = self.original_text.split(' ')
 
-    def is_valid_word(self, word: str):
-        word_score = Similarity().meansure_similarity(w1=word)
+        with multiprocessing.Pool() as pool:
+            final_result = pool.map(self.get_nearest, self.processed_text)
 
-        # In production...
+        return ' '.join(final_result)
     
+
     
+
+
+
+
+
+"""
+Usage:
+
+target_word = "example"
+word_list = ["example1", "example2", "example3"]
+
+similarity_scores = Similarity.calculate_similarity(target_word, word_list)
+print(f"Similarity scores: {similarity_scores}")
+"""
 
 
 

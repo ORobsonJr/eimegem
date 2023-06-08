@@ -40,7 +40,7 @@ def text_correction(request):
 
     try:
         text = request.data
-        result = utils_converter.text_correction(text)
+        result = utils_converter.correct_by_gpt(text['data'])
         return Response({"data": result})
     
     except Exception as e:

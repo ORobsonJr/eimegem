@@ -1,13 +1,45 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang=pt-BR">
 <head>
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="{% static 'css/style.css' %}">
    <title>Eimegem</title>
+   <script>
+      var button_correct = document.getElementById('correct-text');
+
+      document.addEventListener('click', function() {
+         var output = document.getElementById('output-text')
+
+         if (output.value) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8000/v1/correct_text', true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({'data': output.value}));
+
+            xhr.onreadystatechange = function() {
+            if (xhr.status == 200) {
+               var response = JSON.parse(xhr.response);
+               document.getElementById('output-text').value = response["data"];
+
+            }
+
+            else {
+               console.log(xhr.responseText);
+            }
+         }}
+
+         else {
+            // ignore
+         }
+
+        
+      });
+
+    </script>
 </head>
 <body id="body">
 
@@ -30,11 +62,22 @@
    <div class="input-field">
       <h1 id="sub-title"><br>Resultado</h1>
       <p>O seu resultado será retornado no campo abaixo de forma edítavel, ou seja, em casos de erros de tradução do programa, você pode corrigir esses erros.</p>
+      <div class="button-correct">
+         <img src="{% static 'img/gpt.png' %}" width="30px">
+         <input type="button" id="correct-text" value="Corrigir texto" title="Ao clicar aqui o texto abaixo será corrigido pelo Chat-GPT">
+      </div>
       <textarea id="output-text" name="text"></textarea>
    <!--    <img src="{% static 'img/github.png' %}" width="80px" height="auto">
    -->
    </div>
+
+   <div class="made-by-robson">
+      💜 Made by Robson
+   </div>
 </div>
+
+
+
 
 <script src="{% static 'js/convert_api.js' %}"></script>
 <style>
