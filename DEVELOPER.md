@@ -14,3 +14,5 @@ In example above we've how projects works, in resume the projects works based in
 | ![DjangoREST](https://img.shields.io/badge/DJANGO-REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray) | DjangoREST   |
 | Chat-GPT API | 3.5 |
 
+## Api Documentation
+To checkout API Documentation [click here and open this file in your browser](/home/linuxlite/eimegem/build/html/index.html)
