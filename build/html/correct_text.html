@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Enhance text through CHAT-GPT &#8212; Eimegem Eimegem documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Scrape text from image" href="convertImage.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="enhance-text-through-chat-gpt">
+<h1>Enhance text through CHAT-GPT<a class="headerlink" href="#enhance-text-through-chat-gpt" title="Permalink to this heading">¶</a></h1>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Make sure to handle errors and exceptions properly when using this API route.</p>
+</div>
+<section id="v1-correct-text-post-json">
+<h2><code class="docutils literal notranslate"><span class="pre">v1/correct_text</span></code> POST JSON<a class="headerlink" href="#v1-correct-text-post-json" title="Permalink to this heading">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">v1/correct_text</span></code> route allows you to enhance the text through correction made by CHAT-GPT.</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Permalink to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">data</span></code> The JSON key used to send text in string format.
+<code class="docutils literal notranslate"><span class="pre">Example:</span></code> {‘data’: ‘base64 code here’}</p>
+</section>
+<section id="response">
+<h3>Response<a class="headerlink" href="#response" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">200</span></code> The API will respond with a status code of 200 OK and the enhanced text.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">500</span></code> Happen some error in server or in client request</p></li>
+</ul>
+</section>
+<section id="example-usage">
+<h3>Example Usage<a class="headerlink" href="#example-usage" title="Permalink to this heading">¶</a></h3>
+<p>Here’s an example of how to use the <code class="docutils literal notranslate"><span class="pre">correct_text</span></code> API route in Python:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://localhost:8000/v1/correct_text&quot;</span>
+<span class="n">text_to_enhance</span> <span class="o">=</span> <span class="s2">&quot;O resultado finalll que saio foi ezze&quot;</span>
+
+<span class="n">text_json</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">text_to_enhance</span><span class="p">}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">text_json</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">200</span><span class="p">:</span>
+    <span class="n">improved_text</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">content</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Text enhancement failed. Status code:&quot;</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Remember to handle errors and exceptions appropriately in your code.</p>
+</section>
+<section id="additional-notes">
+<h3>Additional Notes<a class="headerlink" href="#additional-notes" title="Permalink to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Be aware of limitations and restrictions on the supported image formats, the current supported files formats are ‘JPG, PNG, JPEG and PDF’.</p></li>
+<li><p>Ensure that you has the GPT API key set in your system if you’re running it locally</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Eimegem</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Documentation:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="convertImage.html">Scrape text from image</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Enhance text through CHAT-GPT</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v1-correct-text-post-json"><code class="docutils literal notranslate"><span class="pre">v1/correct_text</span></code> POST JSON</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="convertImage.html" title="previous chapter">Scrape text from image</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Robson J.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/correct_text.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
