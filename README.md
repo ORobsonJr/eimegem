@@ -33,7 +33,14 @@ Follow these steps to set up and run Eimegem:
    git clone https://github.com/ORobsonJr/eimegem
    ```
   
-2. Install python requirements
+2. Activate virtualenv and install python requirements
+    ```
+    virtualenv .venv
+    ```
+    
+    ```
+    source .venv/bin/activate
+    ```
 
     ```
     pip3 install -r requirements.txt
