@@ -8,5 +8,5 @@ matplotlib
 pdf2image
 PyPDF2
 openai
-decouple
+python-decouple
 Sphinx
