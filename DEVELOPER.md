@@ -15,4 +15,4 @@ In example above we've how projects works, in resume the projects works based in
 | Chat-GPT API | 3.5 |
 
 ## Api Documentation
-To checkout API Documentation [click here and open this file in your browser](/home/linuxlite/eimegem/build/html/index.html)
+To checkout API Documentation [click here and open this file in your browser](build/html/index.html)
