@@ -23,36 +23,28 @@ Check out the following video to see Eimegem in action:
 https://github.com/ORobsonJr/eimegem/assets/109431368/44357b62-1fbe-4faf-8cfd-928fb98ecab6
 
 
-## Installation & use
+## Installation & use 
 
-Follow these steps to set up and run Eimegem:
+Follow these steps to install eimegem:
 
-1. Clone the repository:
+| ![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black) Linux  | ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white) Install through Docker to other systems (Windows, Mac...) |
+| ------------- | ------------- |
+| ``` git clone https://github.com/ORobsonJr/eimegem ```  | ``` git clone https://github.com/ORobsonJr/eimegem ``` |
+|  ``` virtualenv .venv && source .venv/bin/activate```  | ``` Activate virtualenviroment in your respective system... ``` |
+|  ``` pip3 install -r requirements.txt ```  | ``` pip3 install decouple ```  |
+|  ``` python3 setup.py ```  | ``` python3 setup.py ``` |
+|   | ``` docker build -t eimegem . ``` |
 
-   ```
-   git clone https://github.com/ORobsonJr/eimegem
-   ```
-  
-2. Activate virtualenv and install python requirements
-    ```
-    virtualenv .venv
-    ```
-    
-    ```
-    source .venv/bin/activate
-    ```
+To run through Docker
+```
+docker run -p 8000:8000 eimegem
+```
 
-    ```
-    pip3 install -r requirements.txt
-    ```
+To run through Linux
+```
+python3 manage.py runserver
+```
 
-3. Configure project 
-    ```
-    python3 setup.py
-    ```
-4. Run project
-    ```
-    python3 manage.py runserver
-    ```
+
 ## Project documentation 
 To checkout project documentation [click here](DEVELOPER.md)
